@@ -14,7 +14,7 @@ const Navbar = () => {
         {/* Menu Items */}
   
       <ul className="hidden md:flex  w-full justify-center gap-8 text-white ">
-        <li><Link to="" className="hover:font-bold">Home</Link></li>
+        <li><Link to="/" className="hover:font-bold">Home</Link></li>
         <li><Link to="/about" className="hover:font-bold">About</Link></li>
         <li><Link to="/gallery" className="hover:font-bold">Gallery</Link></li>
         <li><Link to="/contact" className="hover:font-bold">Contact</Link></li>
@@ -29,7 +29,7 @@ const Navbar = () => {
       >
         <ul className="flex flex-col gap-6 py-6 px-8 text-white text-lg">
           <li>
-            <Link to="/home" onClick={() => setOpen(false)}>Home</Link>
+            <Link to="/" onClick={() => setOpen(false)}>Home</Link>
           </li>
           <li>
             <Link to="/about" onClick={() => setOpen(false)}>About</Link>

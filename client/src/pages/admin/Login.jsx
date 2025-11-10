@@ -1,8 +1,64 @@
-import React from "react";
-import { assets } from "../assets/assets"; // adjust the path if needed
+import React, { useEffect, useState } from "react";
+import { assets } from "../../assets/assets"; // adjust the path if needed
 import { Shield,LogIn } from "lucide-react"; // You can use this icon or replace with assets.ShieldIcon
-
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import axios from "axios";
 const Login = () => {
+   const[email,setEmail] = useState("");
+      const[password,setPassword] = useState("");
+      const navigate = useNavigate()
+      useEffect(()=>{
+      const accessToken = localStorage.getItem('token');
+      if(accessToken){
+         navigate('/dashboard')
+      }
+      },[])
+     //Handle Login Form Submit
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!email || !password) {
+          toast.error("Please enter both email and password");
+          return;
+        }else{
+           navigate("/dashboard");
+        }
+
+        try {
+          const response = await axios.post(
+            `${API_URL}/api/login/`,
+            {
+              email: email,
+              password: password,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          console.log("response=", response.data);
+
+          const { token } = response.data;
+
+          if (token) {
+            localStorage.setItem("token", token);
+            toast.success("Successfully logged in");
+            navigate("/dashboard");
+          }
+        } catch (error) {
+          console.log(error);
+
+          if (error.response && error.response.data) {
+            toast.error(error.response.data.message || "Invalid credentials");
+          } else {
+            toast.error("Something went wrong. Please try again");
+          }
+        }
+      };
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="flex h-[350px] md:h-auto w-auto md:w-[900px] shadow-xl rounded-xl overflow-hidden bg-white">
@@ -37,7 +93,7 @@ const Login = () => {
             </p>
           </div>
 
-          <form className="w-full">
+          <form onSubmit={handleSubmit} className="w-full">
             <div className="mb-2 md:mb-5">
               <label
                 htmlFor="email"
@@ -46,7 +102,7 @@ const Login = () => {
                 Email Address
               </label>
               <input
-                id="email"
+                onChange={(e)=>setEmail(e.target.value)}
                 type="email"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#204E43]"
               />
@@ -60,7 +116,7 @@ const Login = () => {
                 Password
               </label>
               <input
-                id="password"
+                onChange={(e)=>setPassword(e.target.value)}
                 type="password"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#204E43]"
               />

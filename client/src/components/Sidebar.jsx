@@ -1,8 +1,9 @@
 import { LogOut } from 'lucide-react'
 import React from 'react'
 import { assets } from '../assets/assets'
-
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
+  const navigate = useNavigate()
   return (
      <aside className="w-64 min-h-screen bg-[#204E43] text-white flex flex-col justify-between py-6">
         <div>
@@ -22,7 +23,7 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        <button className="flex ms-4 items-center px-6 py-3 bg-white/10 w-1/2 rounded-lg transition text-sm">
+        <button onClick={()=>navigate('/admin')} className="flex ms-4 items-center px-6 py-3 bg-white/10 w-1/2 rounded-lg transition text-sm">
           <LogOut className="w-4 h-4 mr-2" /> Logout
         </button>
       </aside>
