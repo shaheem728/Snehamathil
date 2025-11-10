@@ -15,7 +15,7 @@ function App() {
       <Routes>
         {/* User Layout */}
         <Route element={<UserLayout />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -23,11 +23,11 @@ function App() {
 
         {/* Admin Layout */}
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<GalleryManagement />} />
+          <Route path="/dashboard" element={<GalleryManagement />} />
         </Route>
 
         {/* Standalone Route */}
-        <Route path="/" element={<Login />} />
+        <Route path="/admin" element={<Login />} />
       </Routes>
     </Router>
   );
