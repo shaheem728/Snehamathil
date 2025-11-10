@@ -24,19 +24,19 @@ const PanoramaSlider = () => {
             breakpoints={{
               640: {
                 slidesPerView: 1.5,
-                spaceBetween: 0,
+                spaceBetween: -70,
               },
               768: {
                 slidesPerView: 2.5,
-                spaceBetween: 0,
+                spaceBetween: -70,
               },
               1024: {
                 slidesPerView: 3.5,
-                spaceBetween: 0,
+                spaceBetween: -70,
               },
               1280: {
                 slidesPerView: 4.5,
-                spaceBetween: 0,
+                spaceBetween: -50,
               },
             }}
             className="panorama-swiper"
@@ -47,7 +47,7 @@ const PanoramaSlider = () => {
                   <img
                     src={slide.url}
                     alt="slide"
-                    className="w-full h-full object-cover"
+                    className="w-screen  h-full object-cover"
                   />
                 </div>
               </SwiperSlide>

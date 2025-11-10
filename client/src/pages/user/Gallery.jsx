@@ -1,6 +1,7 @@
 import React from 'react'
 import { gallery } from '../../assets/assets'
 import PanoramaSwiper from '../../components/PanoramaSwiper'
+import PanoramaSlider from '../../components/PanoramaSlider'
 import {  useNavigate  } from 'react-router-dom';
 const Gallery = () => {
   const navigate =  useNavigate ()
@@ -19,8 +20,8 @@ const Gallery = () => {
 
         {/* Carousal Slide */}
         <div className="mb-10">
-            {/* <PanoramaSlider/> */}
-            <PanoramaSwiper/>
+            <PanoramaSlider/>
+            {/* <PanoramaSwiper/> */}
         </div>
 
         {/* Gallery Section */}
