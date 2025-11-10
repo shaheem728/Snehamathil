@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { assets } from "../../assets/assets";
 import { Plus, Trash2, Upload, X , Save ,Menu } from "lucide-react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import Sidebar from "../../components/Sidebar";
 
 const GalleryManagement = () => {
   const [isAdding, setIsAdding] = useState(false);
-   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const galleryItems = [
-    {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Fetched items
+  const [galleryItems, setGalleryItems] = useState([
+      {
       id: 1,
       title: "ELEGANT COMPOUND WALL DESIGNS",
       description:
@@ -31,8 +35,97 @@ const GalleryManagement = () => {
       order: 3,
       image: assets.Gallery_1,
     },
-    // add more items as needed
-  ];
+  ]);
+
+  // Add form fields
+  const [title, setTitle] = useState("");
+  const [imageURL, setImageURL] = useState("");
+  const [description, setDescription] = useState("");
+  const [order, setOrder] = useState("");
+
+  
+// Fetch Gallery Items
+useEffect(() => {
+  fetchGallery();
+}, []);
+
+const fetchGallery = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await axios.get(`${API_URL}/api/gallery/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    setGalleryItems(res.data);
+  } catch (error) {
+    toast.error("Failed to load gallery items");
+  }
+};
+
+//Add Image
+const handleAddImage = async (e) => {
+  e.preventDefault();
+
+  if (!title || !imageURL) {
+    toast.warning("Title and Image URL required");
+    return;
+  }
+
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/gallery/create/`,
+      {
+        title,
+        description,
+        image: imageURL,
+        order,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    toast.success("Image added successfully!");
+
+    // Update list
+    fetchGallery();
+
+    // Reset fields
+    setTitle("");
+    setImageURL("");
+    setDescription("");
+    setOrder("");
+
+    setIsAdding(false);
+  } catch (error) {
+    toast("Failed to upload image");
+  }
+};
+
+//Delete Image
+const deleteImage = async (id) => {
+  const token = localStorage.getItem("token");
+
+  try {
+    await axios.delete(`${API_URL}/api/gallery/delete/${id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    toast.success("Image deleted");
+    fetchGallery();
+  } catch (error) {
+    toast.error("Delete failed");
+  }
+};
+
 
   return (
     <div className="relative flex min-h-screen bg-gray-50">
@@ -120,7 +213,9 @@ const GalleryManagement = () => {
                       <button className="flex items-center bg-[#204E43] text-white text-xs px-3 py-1 rounded-md">
                          Edit <img src={assets.Edit} className="w-3 h-3 ml-1" />
                       </button>
-                      <button className="flex items-center bg-red-600 text-white text-xs px-3 py-1 rounded-md">
+                      <button 
+                      onClick={() => deleteImage(item.id)}
+                      className="flex items-center bg-red-600 text-white text-xs px-3 py-1 rounded-md">
                          Delete <Trash2 className="w-3 h-3 ml-1" />
                       </button>
                     </div>
@@ -132,12 +227,14 @@ const GalleryManagement = () => {
         ) : (
           <div className="bg-white border border-gray-300 p-8 rounded-xl shadow-md">
             <h3 className="text-xl font-semibold">Add New Image</h3>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleAddImage}>
               <div className="flex gap-4">
                 <div className="flex-1">
                   <label className="text-sm text-gray-700">Title</label>
                   <input
                     type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"
                   />
                 </div>
@@ -146,6 +243,8 @@ const GalleryManagement = () => {
                   <div className="flex gap-2">
                     <input
                       type="text"
+                      value={imageURL}
+                      onChange={(e) => setImageURL(e.target.value)}
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"
                     />
                     <button
@@ -162,13 +261,18 @@ const GalleryManagement = () => {
                 <label className="text-sm text-gray-700">
                   Description (optional)
                 </label>
-                <textarea className="w-full border  border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"></textarea>
+                <textarea 
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                className="w-full border  border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"></textarea>
               </div>
 
               <div>
                 <label className="text-sm text-gray-700">Display Order</label>
                 <input
                   type="number"
+                  value={order}
+                  onChange={(e) => setOrder(e.target.value)}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"
                 />
               </div>
