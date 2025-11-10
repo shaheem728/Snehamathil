@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Rochester&family=Rokkitt:ital,wght@0,700;1,700&display=swap');
+
+@import "tailwindcss";
+
+.rochester-regular {
+  font-family: "Rochester", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.mission_image{
+  @apply object-cover w-auto h-36  md:h-52 shadow-2xl
+}
+
+/* Move bullets like image */
+.testimonials-swiper .swiper-pagination {
+  bottom: 15em !important;
+  left: 0 !important;
+  width: auto !important;
+  padding-left: 20px;
+}
+.home-swiper .swiper-pagination {
+  bottom: 3em !important;
+}
+/* Bullet default */
+.swiper-pagination-bullet {
+  width: 20px !important;
+  height: 20px !important;
+  background: gray !important; /* yellow */
+  opacity: 1 !important;           /* remove transparency */
+  margin: 0 6px !important;
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+  background: #2F5D50 !important;     /* black */
+}
+
+
+@media only screen and (max-width: 600px) {
+  .testimonials-swiper .swiper-pagination {
+    visibility: hidden;
+  }
+
+}
+
