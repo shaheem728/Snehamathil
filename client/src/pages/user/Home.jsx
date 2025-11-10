@@ -224,7 +224,7 @@ const Home = () => {
   {/* End Testimonials Section */}
   {/* Start ContactUs Section */}
       <section  className="h-[90vh] px-20 bg-[#F0FFFB]  ">
-      <h2 className="text-4xl font-bold text-gray-800 mb-10 ps-36">Contact us</h2>
+      <h2 className="text-4xl font-bold text-gray-800 mb-10 md:ps-36">Contact us</h2>
 
       <div className="grid md:grid-cols-3 sm:grid-cols-1  max-w-6xl mx-auto px-6 relative">
         {contacts.map((c, index) => (

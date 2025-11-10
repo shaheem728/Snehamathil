@@ -14,7 +14,7 @@ const Navbar = () => {
         {/* Menu Items */}
   
       <ul className="hidden md:flex  w-full justify-center gap-8 text-white ">
-        <li><Link to="/home" className="hover:font-bold">Home</Link></li>
+        <li><Link to="" className="hover:font-bold">Home</Link></li>
         <li><Link to="/about" className="hover:font-bold">About</Link></li>
         <li><Link to="/gallery" className="hover:font-bold">Gallery</Link></li>
         <li><Link to="/contact" className="hover:font-bold">Contact</Link></li>

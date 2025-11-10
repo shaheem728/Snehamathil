@@ -11,7 +11,7 @@ const Gallery = () => {
         <h2 className="text-3xl md:text-5xl font-semibold text-[#375E56] mb-4">
           Our Work Speaks for Itself
         </h2>
-        <p className="text-[#375E56] w-[35%] font-semibold mx-auto mb-12">
+        <p className="text-[#375E56] md:w-[35%] font-semibold mx-auto mb-12">
           Discover the strength, beauty, and craftsmanship behind every Sneha
           Marts. Each wall is built with precision, care, and a promise of long
           lasting quality.

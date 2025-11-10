@@ -16,12 +16,12 @@ const About = () => {
           <img
             src={assets.Slide_1}
             alt="Boundary wall"
-            className="absolute top-0 left-0 shadow-md w-1/2 md:w-8/12 object-cover"
+            className="absolute top-0 left-0 shadow-md w-56 md:w-8/12 object-cover"
           />
           <img
             src={assets.Slide_3}
             alt="Construction site"
-            className="absolute z-30 -bottom-40 md:-bottom-72 right-4/12 md:right-10 border-white border-4 bor shadow-md  w-1/2 md:w-8/12 object-cover"
+            className="absolute z-30 top-20 md:-bottom-72 sm:right-1/12 right-4/12 md:right-10 border-white border-4  shadow-md  w-56 md:w-8/12 object-cover"
           />
         </div>
 
@@ -48,7 +48,7 @@ const About = () => {
     </section>
     {/* End AboutUs section */}
     {/* Start Services Section */}
-      <section className="py-20 px-6 md:px-12">
+      <section className="py-20 px-6  md:px-12">
       <div className="text-center max-w-3xl mx-auto mt-16 mb-12">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
           Our Services
@@ -61,7 +61,7 @@ const About = () => {
       </div>
 
       {/* Services Grid */}
-      <div className="flex flex-wrap justify-center items-center gap-8 px-40   ">
+      <div className="flex flex-wrap justify-center items-center gap-8 md:px-40   ">
         {OusrServices.map((service) => (
           <div
             key={service.id}

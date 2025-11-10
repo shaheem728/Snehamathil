@@ -5,7 +5,7 @@ const BuildWithUs = () => {
   const location = useLocation();
   const navigate =  useNavigate ()
   return (
-    <section className="py-28 px-14 bg-[#F0FFFB] text-center ">
+    <section className="py-28 md:px-14 bg-[#F0FFFB] text-center ">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Build With Us</h2>
           <p className="text-gray-600 mb-12">
             We provide reliable and affordable slab wall solutions <br />

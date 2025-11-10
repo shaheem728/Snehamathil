@@ -20,7 +20,7 @@ const Contact = () => {
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
             We’re Here to Help You Build Stronger Boundaries
           </h2>
-          <p className="text-sm md:text-base mb-6 px-20">
+          <p className="text-sm md:text-base mb-6 px-10 md:px-20">
             Whether you’re looking for a new Slab Wall construction, custom wall
             design, or just a site visit & quotation, our team is ready to
             assist you with expert support and transparent pricing.
@@ -34,7 +34,7 @@ const Contact = () => {
 
       {/* Contact Info Section */}
       <section className='flex justify-center items-center py-20'>
-      <div className="bg-[#D9FFF4] w-[90%] rounded-3xl  py-10 px-20 flex flex-col md:flex-row items-center gap-5 justify-between ">
+      <div className="bg-[#D9FFF4] w-[90%] rounded-3xl  py-10 md:px-20 flex flex-col md:flex-row items-center gap-5 justify-between ">
         {/* Left Side: Contact Info */}
         <div className="flex flex-col text-start space-y-5 ">
           <h3 className="font-bold text-xl  text-[#2F5D50]">Get touch with us</h3>
@@ -73,7 +73,7 @@ const Contact = () => {
         {/* Right Side: Map */}
        <div
   onClick={() => mapLocation()}
-  className="relative shadow-2xl rounded-3xl cursor-pointer w-[500px] h-[350px]"
+  className="relative shadow-2xl rounded-3xl cursor-pointer h-[250px] w-[350px] md:w-[500px] md:h-[350px]"
   style={{
     backgroundImage: `url(${assets.Map})`,
     backgroundSize: "cover",
@@ -90,7 +90,7 @@ const Contact = () => {
   />
 
   {/* Location text */}
-  <h3 className="absolute   top-6/12  translate-x-5/12 text-xl  text-[#2F5D50] font-bold ">
+  <h3 className="absolute text-sm   top-6/12  translate-x-5/12 md:text-xl  text-[#2F5D50] font-bold ">
     Kakkanad, Kochi Kerala India
   </h3>
 </div>
