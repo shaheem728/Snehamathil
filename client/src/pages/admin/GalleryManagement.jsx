@@ -8,7 +8,8 @@ import Sidebar from "../../components/Sidebar";
 const GalleryManagement = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [editMode, setEditMode] = useState(false);
+  const [editingID, setEditingID] = useState(null);
   // Fetched items
   const [galleryItems, setGalleryItems] = useState([
       {
@@ -37,6 +38,28 @@ const GalleryManagement = () => {
     },
   ]);
 
+  // Fetch Editing items
+  const fetchEditing = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(`${API_URL}/api/gallery/editing/${id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = res.data;
+
+   // AUTO-FILL form fields
+    setTitle(data.title);
+    setImageURL(data.image);
+    setDescription(data.description);
+    setOrder(data.order);
+
+  } catch (error) {
+    toast.error("Failed to load gallery items");
+  }
+};
   // Add form fields
   const [title, setTitle] = useState("");
   const [imageURL, setImageURL] = useState("");
@@ -126,6 +149,58 @@ const deleteImage = async (id) => {
   }
 };
 
+//UPDATE Items 
+const handleUpdateImage = async (e) => {
+  e.preventDefault();
+
+  const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.put(
+      `${API_URL}/api/gallery/update/${editingID}/`,
+      {
+        title,
+        image: imageURL,
+        description,
+        order,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    toast.success("Gallery item updated!");
+
+    setEditMode(false);
+    setEditingID(null);
+
+    fetchGallery();
+
+    // Clear form
+    setTitle("");
+    setImageURL("");
+    setDescription("");
+    setOrder("");
+    setIsAdding(false);
+  } catch (error) {
+    toast.error("Update failed");
+  }
+};
+
+//Reset form
+const resetForm = () => {
+  setTitle("");
+  setImageURL("");
+  setDescription("");
+  setOrder("");
+  setEditingID(null);
+  setEditMode(false);
+  setIsAdding(false);
+};
+
 
   return (
     <div className="relative flex min-h-screen bg-gray-50">
@@ -152,7 +227,7 @@ const deleteImage = async (id) => {
             Gallery Management
           </h2>
           <button
-            onClick={() => setIsAdding(!isAdding)}
+            onClick={() =>{setIsAdding(!isAdding),resetForm()}}
             className="bg-[#204E43] text-white flex items-center px-4 py-2 rounded-lg hover:bg-[#1C463B] transition"
             >
             {isAdding ? (
@@ -210,12 +285,19 @@ const deleteImage = async (id) => {
                       order:{item.order}
                     </p>
                     <div className="flex space-x-4">
-                      <button className="flex items-center bg-[#204E43] text-white text-xs px-3 py-1 rounded-md">
+                      <button onClick={()=>{
+                        fetchEditing(item.id);
+                        setEditingID(item.id);
+                        setEditMode(true);
+                        setIsAdding(true);
+                        setIsAdding(true);
+                      }} 
+                        className="flex items-center cursor-pointer bg-[#204E43] text-white text-xs px-3 py-1 rounded-md">
                          Edit <img src={assets.Edit} className="w-3 h-3 ml-1" />
                       </button>
                       <button 
                       onClick={() => deleteImage(item.id)}
-                      className="flex items-center bg-red-600 text-white text-xs px-3 py-1 rounded-md">
+                      className="flex items-center cursor-pointer bg-red-600 text-white text-xs px-3 py-1 rounded-md">
                          Delete <Trash2 className="w-3 h-3 ml-1" />
                       </button>
                     </div>
@@ -225,9 +307,9 @@ const deleteImage = async (id) => {
             </div>
           </>
         ) : (
-          <div className="bg-white border border-gray-300 p-8 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold">Add New Image</h3>
-            <form className="space-y-4" onSubmit={handleAddImage}>
+          <div className="bg-white border border-gray-300 p-5 rounded-xl shadow-md">
+            <h3 className="text-xl py-2  font-bold">{editMode ? "Update Image" : "Add New Image"}</h3>
+            <form className="space-y-4" onSubmit={editMode ? handleUpdateImage : handleAddImage}>
               <div className="flex gap-4">
                 <div className="flex-1">
                   <label className="text-sm text-gray-700">Title</label>
@@ -282,7 +364,7 @@ const deleteImage = async (id) => {
                   type="submit"
                   className="flex items-center bg-[#204E43] text-white px-4 py-2 rounded-md hover:bg-[#1C463B]"
                 >
-                  <Plus className="w-4 h-4 mr-2" /> Add Image
+                  <Plus className="w-4 h-4 mr-2" /> {editMode ? "Update Image" : "Add Image"}
                 </button>
                 <button
                   type="button"
