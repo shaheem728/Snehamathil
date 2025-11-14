@@ -1,89 +1,45 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext } from "react";
 import { assets } from "../../assets/assets";
 import { Plus, Trash2, Upload, X , Save ,Menu } from "lucide-react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Sidebar from "../../components/Sidebar";
-
+import axiosInstance from "../../utils/axios";
+import { API_PATHS } from "../../utils/apiPaths";
+import  GalleryContext  from "../../context/GalleryContext";
 const GalleryManagement = () => {
+  const {galleryData,getGalleryItems} = useContext(GalleryContext)
   const [isAdding, setIsAdding] = useState(false);
+  const [isDraft, setIsDraft] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [editingID, setEditingID] = useState(null);
-  // Fetched items
-  const [galleryItems, setGalleryItems] = useState([
-      {
-      id: 1,
-      title: "ELEGANT COMPOUND WALL DESIGNS",
-      description:
-        "The wall may be situated along a property line, a roadside, or an industrial area, possibly with a clear sky.",
-      order: 1,
-      image: assets.Gallery_1,
-    },
-    {
-      id: 2,
-      title: "ELEGANT COMPOUND WALL DESIGNS",
-      description:
-        "The wall may be situated along a property line, a roadside, or an industrial area, possibly with a clear sky.",
-      order: 2,
-      image: assets.Gallery_1,
-    },
-    {
-      id: 3,
-      title: "ELEGANT COMPOUND WALL DESIGNS",
-      description:
-        "The wall may be situated along a property line, a roadside, or an industrial area, possibly with a clear sky.",
-      order: 3,
-      image: assets.Gallery_1,
-    },
-  ]);
+  const [uploadImage,setUploadImage] = useState('');
 
-  // Fetch Editing items
-  const fetchEditing = async (id) => {
-  try {
-    const token = localStorage.getItem("token");
-    const res = await axios.get(`${API_URL}/api/gallery/editing/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
 
-    const data = res.data;
+// Add form fields
+const [title, setTitle] = useState("");
+const [imageURL, setImageURL] = useState("");
+const [description, setDescription] = useState("");
+const [order, setOrder] = useState("");
+const [draft,setDraft] = useState(false)
 
-   // AUTO-FILL form fields
-    setTitle(data.title);
-    setImageURL(data.image);
-    setDescription(data.description);
-    setOrder(data.order);
 
-  } catch (error) {
-    toast.error("Failed to load gallery items");
-  }
-};
-  // Add form fields
-  const [title, setTitle] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [description, setDescription] = useState("");
-  const [order, setOrder] = useState("");
 
-  
 // Fetch Gallery Items
 useEffect(() => {
-  fetchGallery();
+  getGalleryItems();
 }, []);
 
-const fetchGallery = async () => {
-  try {
-    const token = localStorage.getItem("token");
-
-    const res = await axios.get(`${API_URL}/api/gallery/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setGalleryItems(res.data);
-  } catch (error) {
-    toast.error("Failed to load gallery items");
-  }
+//Reset form
+const resetForm = () => {
+  setTitle("");
+  setImageURL("");
+  setDescription("");
+  setOrder("");
+  setEditingID(null);
+  setEditMode(false);
+  setUploadImage("")
+  setDraft(false)
 };
 
 //Add Image
@@ -94,117 +50,117 @@ const handleAddImage = async (e) => {
     toast.warning("Title and Image URL required");
     return;
   }
-
-  const token = localStorage.getItem("token");
-
   try {
-    const res = await axios.post(
-      `${API_URL}/api/gallery/create/`,
+    const res = await axiosInstance.post(API_PATHS.GALLERY.CREATE_GALLERY,
       {
         title,
         description,
-        image: imageURL,
+        image: uploadImage,
         order,
+        is_draft:draft,
+      }, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
+    }
     );
 
     toast.success("Image added successfully!");
 
     // Update list
-    fetchGallery();
-
-    // Reset fields
-    setTitle("");
-    setImageURL("");
-    setDescription("");
-    setOrder("");
-
-    setIsAdding(false);
+     getGalleryItems();
+     resetForm()
+     setIsAdding(false)
+ 
   } catch (error) {
     toast("Failed to upload image");
   }
 };
 
+// Fetch Editing items
+const fetchEditing = async (Id) => {
+try {
+  const res = await axiosInstance.get(API_PATHS.GALLERY.EDIT_GALLERY(Id));
+  const data = res.data;
+  // AUTO-FILL form fields
+  setTitle(data.title);
+  setImageURL(data.image);
+  setDescription(data.description);
+  setOrder(data.order);
+} catch (error) {
+  toast.error("Failed to load gallery item");
+}
+};
+
 //Delete Image
-const deleteImage = async (id) => {
-  const token = localStorage.getItem("token");
-
+const deleteImage = async (Id) => {
   try {
-    await axios.delete(`${API_URL}/api/gallery/delete/${id}/`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
+    await axiosInstance.delete(API_PATHS.GALLERY.DELETE_GALLERY(Id),);
     toast.success("Image deleted");
-    fetchGallery();
+     getGalleryItems();
   } catch (error) {
     toast.error("Delete failed");
   }
 };
 
 //UPDATE Items 
-const handleUpdateImage = async (e) => {
-  e.preventDefault();
+const handleUpdateImage = async (e,id) => {
+  e.preventDefault()
+  // Use id directly, not editingID
+  const updateId = id || editingID;
 
-  const token = localStorage.getItem("token");
+  if (!updateId) {
+    toast.error("No item selected for update!");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("order", order);
+  formData.append("is_draft", draft);
+
+  if (uploadImage) {
+    formData.append("image", uploadImage ? uploadImage : imageURL);
+  }
 
   try {
-    const res = await axios.put(
-      `${API_URL}/api/gallery/update/${editingID}/`,
-      {
-        title,
-        image: imageURL,
-        description,
-        order,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
+    const res = await axiosInstance.patch(
+      API_PATHS.GALLERY.UPDATE_GALLERY(updateId),
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
 
-    toast.success("Gallery item updated!");
+    toast.success("Updated successfully!");
+    getGalleryItems();
+    resetForm();
+    setIsAdding(false)
 
-    setEditMode(false);
-    setEditingID(null);
-
-    fetchGallery();
-
-    // Clear form
-    setTitle("");
-    setImageURL("");
-    setDescription("");
-    setOrder("");
-    setIsAdding(false);
-  } catch (error) {
+  } catch (err) {
     toast.error("Update failed");
   }
 };
 
-//Reset form
-const resetForm = () => {
-  setTitle("");
-  setImageURL("");
-  setDescription("");
-  setOrder("");
-  setEditingID(null);
-  setEditMode(false);
-  setIsAdding(false);
-};
 
+
+
+
+function handleImage(e) {
+  const file = e.target.files[0];
+  console.log("file=",file)
+  if (file) {
+    setImageURL(URL.createObjectURL(file)); // for preview
+    setUploadImage(file); // store file object
+  } else {
+    console.log("No file selected");
+  }
+}
+const draftItems = galleryData.filter(item => item.is_draft === true);
+const publishedItems = galleryData.filter(item => item.is_draft === false);
 
   return (
     <div className="relative flex min-h-screen bg-gray-50">
-        
+      <input type='file' accept='image/*' hidden id='inputImg' onChange={handleImage}  />  
       {/* Sidebar */}
       {
         <>
@@ -213,7 +169,7 @@ const resetForm = () => {
         </div>
         <div className=" md:hidden absolute   left-0 top-0 ">
          {
-            !isMenuOpen ?  <Sidebar/> : ''
+            isMenuOpen ?  <Sidebar/> : ''
          }   
         </div>
         </>
@@ -221,14 +177,14 @@ const resetForm = () => {
       
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-2 md:p-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-gray-800">
+          <h2 className="text-lg md:text-2xl font-semibold text-gray-800">
             Gallery Management
           </h2>
           <button
             onClick={() =>{setIsAdding(!isAdding),resetForm()}}
-            className="bg-[#204E43] text-white flex items-center px-4 py-2 rounded-lg hover:bg-[#1C463B] transition"
+            className="bg-[#204E43] cursor-pointer text-sm md:text-lg text-white flex items-center px-4 py-2 rounded-lg hover:bg-[#1C463B] transition"
             >
             {isAdding ? (
                 <>
@@ -254,20 +210,79 @@ const resetForm = () => {
           <>
             {/* Tabs */}
             <div className="flex space-x-3 mb-6">
-              <button className="bg-[#3D6A5A] text-white font-semibold px-4 py-1 rounded-md text-sm">
+              <button onClick={()=>setIsDraft(false)} className={`${isDraft?' bg-[#CDEDE2] text-[#3D6A5A]':'bg-[#3D6A5A] text-white'}  text-[#3D6A5A] cursor-pointer font-semibold px-4 py-1 rounded-md text-sm`}>
                 Uploaded
               </button>
-              <button className="bg-[#CDEDE2] text-[#3D6A5A] font-semibold px-4 py-1 rounded-md text-sm">
+              <button onClick={()=>{setIsDraft(true);getGalleryItems()}} className={`${isDraft?'bg-[#3D6A5A] text-white':'bg-[#CDEDE2] text-[#3D6A5A]'} cursor-pointer font-semibold px-4 py-1 rounded-md text-sm`}>
                 Drafts
               </button>
             </div>
-
-            {/* Gallery Grid */}
+            {
+              isDraft ?<> 
+                 {/* Drafts Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {galleryItems.map((item) => (
+              {draftItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white shadow-md rounded-lg overflow-hidden"
+                  className="bg-[#E8FFF7]  shadow-md rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-40 object-cover"
+                  />
+                  <div className="p-4">
+                    <h3 className="font-semibold text-gray-800 text-sm mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 mb-2">
+                      {item.description}
+                    </p>
+                    <p className="text-xs text-gray-400 mb-3">
+                      order:{item.order}
+                    </p>
+                    <div className="flex space-x-4">
+                      <button onClick={()=>{
+                        fetchEditing(item.id);
+                        setEditingID(item.id)
+                        setEditMode(true);
+                        setIsAdding(true);
+                      }} 
+                        className="flex items-center cursor-pointer bg-[#204E43] text-white text-xs px-3 py-1 rounded-md">
+                         Edit <img src={assets.Edit} className="w-3 h-3 ml-1" />
+                      </button>
+                     <button
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        setEditingID(item.id);
+                        setDraft(false);
+
+                        await fetchEditing(item.id);
+                        await handleUpdateImage(e, item.id);
+                      }}
+                      className="flex items-center cursor-pointer bg-[#0234BD] text-white text-xs px-3 py-1 rounded-md"
+                    >
+                      Publish <Upload className="ml-1 w-4 h-4" />
+                    </button>
+
+
+                      <button 
+                      onClick={() => deleteImage(item.id)}
+                      className="flex items-center cursor-pointer bg-red-600 text-white text-xs px-3 py-1 rounded-md">
+                         Delete <Trash2 className="w-3 h-3 ml-1" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div> </>  :
+             <>
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {publishedItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-[#E8FFF7]  shadow-md rounded-lg overflow-hidden"
                 >
                   <img
                     src={item.image}
@@ -305,12 +320,20 @@ const resetForm = () => {
                 </div>
               ))}
             </div>
+            </>
+            }
+           
           </>
         ) : (
           <div className="bg-white border border-gray-300 p-5 rounded-xl shadow-md">
             <h3 className="text-xl py-2  font-bold">{editMode ? "Update Image" : "Add New Image"}</h3>
-            <form className="space-y-4" onSubmit={editMode ? handleUpdateImage : handleAddImage}>
-              <div className="flex gap-4">
+            <form className="space-y-4"
+                onSubmit={(e) =>
+                  editMode 
+                    ? handleUpdateImage(e, editingID) 
+                    : handleAddImage(e)
+                }>
+              <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                   <label className="text-sm text-gray-700">Title</label>
                   <input
@@ -330,8 +353,11 @@ const resetForm = () => {
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#204E43] outline-none"
                     />
                     <button
+                     onClick={()=>{
+                    document.getElementById("inputImg")?.click()
+                  }}
                       type="button"
-                      className="bg-[#204E43] text-white px-3 rounded-md flex items-center"
+                      className="bg-[#204E43] cursor-pointer text-white px-3 rounded-md flex items-center"
                     >
                      Upload <Upload className="ml-1 w-4 h-4" />
                     </button>
@@ -362,13 +388,14 @@ const resetForm = () => {
               <div className="flex gap-3">
                 <button
                   type="submit"
-                  className="flex items-center bg-[#204E43] text-white px-4 py-2 rounded-md hover:bg-[#1C463B]"
+                  className="flex cursor-pointer items-center bg-[#204E43] text-white px-4 py-2 rounded-md hover:bg-[#1C463B]"
                 >
                   <Plus className="w-4 h-4 mr-2" /> {editMode ? "Update Image" : "Add Image"}
                 </button>
                 <button
-                  type="button"
-                  className="flex items-center bg-gray-100 px-4 py-2 rounded-md text-gray-700"
+                 onClick={()=>setDraft(true)}
+                  type="submit"
+                  className="flex cursor-pointer items-center bg-gray-100 px-4 py-2 rounded-md text-gray-700"
                 >
                  <Save color="#2C5F4F" className="w-4 h-4 mr-2" /> Save to draft
                 </button>

@@ -4,61 +4,58 @@ import { Shield,LogIn } from "lucide-react"; // You can use this icon or replace
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import axios from "axios";
+import { API_PATHS } from "../../utils/apiPaths";
 const Login = () => {
    const[email,setEmail] = useState("");
       const[password,setPassword] = useState("");
       const navigate = useNavigate()
-      useEffect(()=>{
-      const accessToken = localStorage.getItem('token');
-      if(accessToken){
-         navigate('/dashboard')
-      }
-      },[])
      //Handle Login Form Submit
-      const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+  e.preventDefault();
 
-        if (!email || !password) {
-          toast.error("Please enter both email and password");
-          return;
-        }else{
-           navigate("/dashboard");
-        }
+  if (!email || !password) {
+    toast.error("Please enter both email and password");
+    return;
+  }
 
-        try {
-          const response = await axios.post(
-            `${API_URL}/api/login/`,
-            {
-              email: email,
-              password: password,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
+  try {
+    const response = await axios.post(
+      API_PATHS.AUTH.LOGIN,
+      { email, password },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-          console.log("response=", response.data);
+    const { access } = response.data;
 
-          const { token } = response.data;
+    if (access) {
+      localStorage.setItem("token", access);
+      toast.success("Successfully logged in");
+      navigate("/dashboard");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
 
-          if (token) {
-            localStorage.setItem("token", token);
-            toast.success("Successfully logged in");
-            navigate("/dashboard");
-          }
-        } catch (error) {
-          console.log(error);
+    // Handle backend-provided error messages
+    if (error.response) {
+      // Server responded with a status code (e.g., 400, 401, 500)
+      const backendError =
+        error.response.data?.error || error.response.data?.detail || "Login failed";
 
-          if (error.response && error.response.data) {
-            toast.error(error.response.data.message || "Invalid credentials");
-          } else {
-            toast.error("Something went wrong. Please try again");
-          }
-        }
-      };
-  
+      toast.error(backendError);
+    } else if (error.request) {
+      // No response received (network error)
+      toast.error("No response from server. Please try again.");
+    } else {
+      // Error while setting up the request
+      toast.error("Something went wrong. Please try again.");
+    }
+  }
+};
+ 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="flex h-[350px] md:h-auto w-auto md:w-[900px] shadow-xl rounded-xl overflow-hidden bg-white">

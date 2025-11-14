@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { ContextProvider } from "./context/GalleryContext"
 import { ToastContainer } from 'react-toastify';
 
 import UserLayout from "./layouts/UserLayout";
@@ -15,6 +15,7 @@ import GalleryManagement from "./pages/admin/GalleryManagement";
 function App() {
   return (
     <Router>
+      <ContextProvider>
       <ToastContainer/>
       <Routes>
         {/* User Layout */}
@@ -32,6 +33,7 @@ function App() {
         </Route>
 
       </Routes>
+      </ContextProvider>
     </Router>
   );
 }

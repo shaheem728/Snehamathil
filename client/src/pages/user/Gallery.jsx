@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import axios from "axios";
+import React, { useEffect, useState, useContext } from 'react'
 import PanoramaSlider from '../../components/PanoramaSlider'
 import { useNavigate } from 'react-router-dom'
-import { gallery } from '../../assets/assets';
+import  GalleryContext  from "../../context/GalleryContext";
 const Gallery = () => {
+  const {galleryData,getGalleryItems} = useContext(GalleryContext)
   const navigate = useNavigate();
 
-  const [galleryData, setGalleryData] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getGalleryItems();
-    
-  }, []);
-
-  const getGalleryItems = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/api/gallery/`);
-      setGalleryData(response.data);  // store API response
-      // if(response.data){
-      //   setLoading(false)
-      // }
-    } catch (error) {
-      console.error("Error fetching gallery data", error);
-    } finally{
+    if(galleryData.length != 0){
       setLoading(false)
     }
-  };
+  }, []);
+
+ 
 
   if (loading) {
     return (
@@ -35,7 +24,7 @@ const Gallery = () => {
       </div>
     );
   }
-
+  const publishedItems = galleryData.filter(item => item.is_draft === false);
   return (
     <section className="bg-[#F0FFFB] py-40 text-center">
       <div className="container mx-auto px-6">
@@ -62,7 +51,7 @@ const Gallery = () => {
   
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {/* {galleryData.map((item, index) => ( */}
-            {gallery.map((item, index) => (
+            {publishedItems.map((item, index) => (
               <div
                 key={index}
                 className="relative mt-5 shadow-xl overflow-hidden hover:shadow-xl transition-shadow"
