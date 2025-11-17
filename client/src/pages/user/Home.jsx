@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState,useContext } from 'react'
 import {assets, carousal, contacts, services, testimonials, works} from '../../assets/assets'
 import {  useNavigate  } from 'react-router-dom';
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,13 +6,45 @@ import { Autoplay,Navigation,Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import BuildWithUs from '../../components/BuildWithUs';
+import GalleryContext from '../../context/GalleryContext'
+import { X } from 'lucide-react';
 
 const Home = () => {
+  const {showAd, setShowAd} = useContext(GalleryContext)
   const navigate =  useNavigate ()
+
   return (
-    <>
+    <section className='relative'>
+     {/* Advertising */}
+     {showAd && (
+  <div className="fixed right-0 bottom-0 backdrop-blur-md flex justify-center items-center z-40">
+    
+    {/* Close Button */}
+    <button 
+      onClick={() => setShowAd(false)}
+      className="absolute cursor-pointer top-1 right-1  px-1 py-1 rounded shadow-lg z-50"
+    >
+      <X  className='w-7 h-7 text-gray-500 md:w-10 md:h-10 cursor-pointer' />
+    </button>
+
+    {/* Video Ad */}
+    <video 
+      width="400" 
+      controls 
+      muted    
+      playsInline  
+      autoPlay 
+      className="rounded-lg shadow-xl w-96 h-[30vh] md:h-[40vh] lg:h-[50vh] "
+      onEnded={() => setShowAd(false)}
+    >
+      <source src={assets.Ad} type="video/mp4" />
+      <source src={assets.Ad} type="video/ogg" />
+    </video>
+  </div>
+)}
+
     {/* start Home Banner */}
-      <div className="container mx-auto pt-16   flex justify-center md:relative h-screen">
+      <div className=" mx-auto md:pt-16 flex justify-center relative h-[60vh] md:h-screen lg:h-screen">
                {/*Swiper Slide */}
                <Swiper modules={[Navigation,Autoplay,Pagination]}
                className='home-swiper' 
@@ -25,18 +57,20 @@ const Home = () => {
                    {carousal.map((slide, index) => 
                      (<SwiperSlide key={index}> 
                      <div
-                        className="h-screen  bg-cover bg-center flex flex-col justify-between items-center"
-                        style={{ backgroundImage: `url(${slide.img})` }}
+                        className="h-screen bg-no-repeat  bg-center flex flex-col justify-between items-center"
+                        style={{ backgroundImage: `url(${slide.img})`,
+                          backgroundSize:"100% 100%"
+                         }}
                       >
                         {/* Dark overlay (optional for contrast) */}
                       <div className="absolute inset-0 bg-black/10 "></div>  
                       <div className='absolute top-1/3  flex flex-col items-center justify-center'>  
-                      <h1 className=" text-5xl font-semibold md:mt-4  w-[80%] text-white text-center uppercase">{slide.title}</h1>
+                      <h1 className=" text-lg md:text-5xl font-semibold md:mt-4  w-[80%] text-white text-center uppercase">{slide.title}</h1>
                       <div className='flex gap-3 mt-5 '>
-                      <button onClick={()=>navigate('/contact')} className="mt-6 px-8 py-3 bg-[#2F5D50] hover:bg-green-700  text-white font-semibold">
+                      <button onClick={()=>navigate('/contact')} className="cursor-pointer  mt-10 md:mt-6 px-2 py-2 md:px-8 md:py-3 text-sm bg-[#2F5D50]   text-white font-semibold">
                       CONTACT US
                       </button>
-                      <button onClick={()=>navigate('/gallery')} className="mt-6 px-8 py-3 bg-white text-[#2F5D50] font-semibold">
+                      <button onClick={()=>navigate('/gallery')} className="cursor-pointer mt-10 md:mt-6 px-2 py-2 md:px-8 md:py-3 text-sm bg-white text-[#2F5D50] font-semibold">
                         VIEW GALLERY
                       </button>
                       </div>
@@ -62,7 +96,7 @@ const Home = () => {
      {/* end Home Banner */}
      {/* start services section */}
       <section className="py-24 bg-[#F0FFFB] text-center" id="services">
-      <h2 className="text-3xl font-bold text-gray-800 mb-10">Our Core Services</h2>
+      <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-10">Our Core Services</h2>
       <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-2 px-10 text-center">
         {services.map((s, i) => (
           <div key={i} className=" p-4 transition flex flex-col items-center justify-center">
@@ -74,53 +108,53 @@ const Home = () => {
     </section>
      {/* end services section */}
      {/* Start Wall Section */}
-<section className="bg-[#375E56] text-white min-h-[70vh] flex items-center px-6 md:px-20 py-10">
-  <div className="flex flex-col md:flex-row items-center justify-between w-full gap-10">
+<section className="bg-[#375E56] text-white  min-h-[88vh] flex items-center px-6 py-10">
+  <div className="flex flex-col md:flex-row items-center justify-center w-full gap-10">
 
     {/* Left Text Section */}
-    <div className="flex flex-col items-center  text-center md:text-right md:w-1/2 space-y-5">
+    <div className="flex flex-col items-center  text-center md:text-right ">
       <div className='items-end'>
-        <h2 className="text-3xl md:text-4xl font-semibold">
+        <h2 className="text-3xl md:text-5xl font-semibold">
           More Than Just A Wall
         </h2>
-        <p className="text-lg font-medium italic mt-1">
+        <p className="text-lg md:text-3xl font-medium italic mt-1">
           — It’s A Promise Of Quality.
         </p>
       </div>
 
-      <p className="text-center text-gray-100 text-sm leading-relaxed max-w-md">
+      <p className="text-center text-gray-100 text-lg leading-relaxed max-w-xl mt-16">
         With Years of Experience In Concrete Slab Wall Works, We Bring You
         Reliable, Long-Lasting,And Elegant Boundary Solutions. <br />
         Our Team Ensures Precision,Perfect Finish,And Customer Satisfaction
         In Every Project We Take.
       </p>
 
-      <button className="px-4 py-2 bg-white text-[#375E56] font-semibold rounded-full shadow-md hover:shadow-lg hover:bg-gray-100 transition-all">
+      <button onClick={() => navigate('/gallery')} className="px-4 py-2 mt-10 cursor-pointer bg-white text-black font-semibold rounded-full shadow-md hover:shadow-lg hover:bg-gray-100 transition-all">
         LEARN MORE
       </button>
     </div>
 
     {/* Right Image Collage */}
-    <div className="relative h-[65vh] md:h-auto md:w-1/2 w-full flex justify-center items-center">
+    <div className="md:relative h-full md:h-auto md:w-1/2 w-full flex flex-col justify-center items-center">
       {/* Base Image */}
       <img
         src={assets.Work_B}
         alt="Wall Design Center"
-        className="absolute right-40  z-20 w-72 h-52 md:w-72 md:h-60 object-cover border-8 border-[#2F5D50] shadow-xl rounded-lg"
+        className="md:absolute md:right-20  z-20 w-72 h-52 md:w-96 md:h-72 object-cover border-8 border-[#2F5D50] shadow-xl rounded-lg"
       />
 
       {/* Top Image */}
       <img
         src={assets.Add_Wall_Z1}
         alt="Wall Design Top"
-        className="absolute top-0 md:-top-[14em] right-16 w-56 h-52 md:w-64 md:h-52 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
+        className="md:absolute top-0 md:-top-[18em] md:right-0 w-72 h-52 md:w-80 md:h-64 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
       />
 
       {/* Bottom Image */}
       <img
         src={assets.Add_Wall_Z3}
         alt="Wall Design Bottom"
-        className="absolute bottom-0 md:-bottom-[14em] right-16 w-56 h-52 md:w-64 md:h-52 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
+        className="md:absolute bottom-0 md:-bottom-[18em] md:right-0 w-72 h-52 md:w-80 md:h-64 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
       />
     </div>
   </div>
@@ -130,32 +164,32 @@ const Home = () => {
  <BuildWithUs/>
 {/* End BuildWithUs Section */}
 {/* Start WhoAre Section */}
-    <section  className=" py-28 flex justify-center text-center items-center gap-10 px-10 bg-[#2F5D50]">
-      <div className='w-[55%]'>
+    <section  className="py-10  md:py-28 flex justify-center text-center items-center gap-10 px-3 md:px-10 bg-[#2F5D50]">
+      <div className='w-full md:w-[65%]'>
         <h2 className="text-4xl font-semibold mb-4 text-white">Who We Are</h2>
-        <p className="text-white text-lg">
-         Building boundaries that last a lifetime — crafted with care,<br/>
+        <p className="text-white text-xl">
+         Building boundaries that last a lifetime — crafted with care,<br className='hidden md:flex' />
          strength, and trust.
         </p>
-        <p className="text-white text-sm my-10 w-full text-center ">
+        <p className="text-white text-lg my-10 w-full text-center ">
         At Sneha Mathil, we specialize in creating high-quality precast slab walls that combine durability with elegant design.
-        With years of experience in the construction field, our team focuses on delivering reliable, affordable, and beautifully<br/>
+        With years of experience in the construction field, our team focuses on delivering reliable, affordable, and beautifully
         finished wall solutions for homes, institutions, and commercial spaces across Kerala.
         </p>
-        <p className="text-white text-sm w-full text-center ">
-        Our commitment goes beyond construction — we believe every wall should reflect protection, beauty, and pride.From<br/>
+        <p className="text-white text-lg w-full text-center ">
+        Our commitment goes beyond construction — we believe every wall should reflect protection, beauty, and pride.From<br className='hidden md:flex' />
         site visit and measurement to installation and after-service, we ensure a seamless experience for every client.
         </p>
-        <button className="mt-10 px-3 py-2 text-black bg-white  uppercase">
-          Get a Quotation
+        <button onClick={()=>navigate('/about')} className="mt-10 px-3 py-2 text-sm text-black bg-white cursor-pointer uppercase">
+          View More
         </button>
       </div>
     </section>
   {/* End WhoAre Section */}
   {/* Start Work Section */}
-    <section  className="py-20 bg-[#F0FFFB] text-center">
+    <section  className="py-20 px-5 bg-[#F0FFFB] text-center">
       <h2 className="text-4xl font-bold text-gray-800 mb-2">Our Works</h2>
-      <p className='mb-10'>Explore our beautifully crafted precast walls — a blend of <br/> strength, style, and durability.</p>
+      <p className='mb-10'>Explore our beautifully crafted precast walls — a blend of <br className='hidden md:flex' /> strength, style, and durability.</p>
       <div className="flex flex-wrap justify-center items-center gap-8">
         {works.map((w, i) => (
           <div key={i} className="relative overflow-hidden shadow hover:shadow-lg ">
@@ -164,13 +198,13 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <button onClick={()=>navigate('/gallery')} className="mt-6 px-10 py-1.5 bg-[#2F5D50] rounded-full text-white">
+      <button onClick={()=>navigate('/gallery')} className="mt-6 cursor-pointer px-10 py-1.5 bg-[#2F5D50] rounded-full text-white">
         SEE MORE
       </button>
     </section>
   {/* End Work Section */}
   {/* Start Testimonials Section */}
-      <section className="py-20 text-center bg-[#F0FFFB]">
+      <section className="min-h-[60vh]  px-6 text-center bg-[#F0FFFB]">
       <h2 className="text-3xl font-bold text-gray-800 mb-5 uppercase">
         What Is Says Our Clients 
       </h2>
@@ -223,27 +257,27 @@ const Home = () => {
     </section>
   {/* End Testimonials Section */}
   {/* Start ContactUs Section */}
-      <section  className="h-[90vh] px-20 bg-[#F0FFFB]  ">
-      <h2 className="text-4xl font-bold text-gray-800 mb-10 md:ps-36">Contact us</h2>
+      <section  className="h-full md:h-[90vh] py-10 px-20 bg-[#F0FFFB]  ">
+      <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-10 md:ps-36">Contact us</h2>
 
-      <div className="grid md:grid-cols-3 sm:grid-cols-1  max-w-6xl mx-auto px-6 relative">
+      <div className="flex flex-col justify-center items-center space-y-5 max-w-6xl mx-auto px-6 md:relative">
         {contacts.map((c, index) => (
           <div
             key={index}
-            className={`bg-[#F0FFFB] text-center border border-gray-200 rounded shadow-sm hover:shadow-lg transition-all w-40 h-52 md:w-64 md:h-72 flex flex-col items-center py-10 space-y-4
+            className={`bg-[#F0FFFB] text-center border border-gray-400 rounded-lg transition-all w-[60vw] h-64 md:w-80 md:h-[48vh] flex flex-col items-center py-10 space-y-4
               ${
-                      index === 0 ? "absolute top-5 -left-10  md:top-8  md:left-20 " :index ===2?"absolute top-5 -right-14 md:top-8 md:right-50":
-                        "absolute  left-1/3 -bottom-[30em] "
+                      index === 0 ? "md:absolute  md:top-8  md:left-20 " :index ===2?"md:absolute md:top-8 md:-right-10":
+                        "md:absolute  left-[30em] -bottom-[30em] "
                     }
               `}
           >
             <img
               src={c.icon}
               alt={c.title}
-              className=" w-5 h-5 md:w-12 md:h-12 object-contain mb-5"
+              className=" w-9 h-9 md:w-12 md:h-12 object-contain mb-5"
             />
-            <h3 className="text-lg font-semibold text-gray-800">{c.title}</h3>
-            <div className="text-sm leading-relaxed pt-10">
+            <h3 className="text-xl font-semibold ">{c.title}</h3>
+            <div className="text-xl font-semibold leading-relaxed pt-5 md:pt-16">
               {c.lines.map((line, i) => (
                 <p key={i}>{line}</p>
               ))}
@@ -254,7 +288,7 @@ const Home = () => {
     </section>
   {/* End ContactUs Section */}
   
-    </>
+    </section>
   )
 }
 

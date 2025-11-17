@@ -71,7 +71,7 @@ const Login = () => {
           <div className="bg-[#204E43]/90 w-full h-full flex flex-col justify-center items-center rounded-l-lg">
             <div className="flex flex-col items-center">
                <Shield className=" w-12 h-12 text-white mb-4" />
-              <h1 className="text-2xl font-semibold mb-2">Snehamathil</h1>
+              <h1 className="text-2xl font-semibold mb-2">Sajina Construction</h1>
               <p className="text-sm opacity-90">Admin Portal</p>
               <p className="text-xs opacity-75 mt-1">Manage your website</p>
             </div>
@@ -121,7 +121,7 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full flex items-center justify-center bg-[#204E43] hover:bg-[#1c463b] text-white font-semibold py-2 rounded-lg transition"
+              className="cursor-pointer w-full flex items-center justify-center bg-[#204E43] hover:bg-[#1c463b] text-white font-semibold py-2 rounded-lg transition"
             >
                <LogIn color="#ffffff" className="w-5 h-5  mr-2" />
                Sign In

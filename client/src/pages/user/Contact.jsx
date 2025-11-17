@@ -20,12 +20,13 @@ const Contact = () => {
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">
             We’re Here to Help You Build Stronger Boundaries
           </h2>
-          <p className="text-sm md:text-base mb-6 px-10 md:px-20">
+          <p className="text-sm md:text-base mb-6  md:px-20">
             Whether you’re looking for a new Slab Wall construction, custom wall
             design, or just a site visit & quotation, our team is ready to
             assist you with expert support and transparent pricing.
           </p>
-          <button className="bg-[#2F5D50] text-white px-6 py-2 rounded-full">
+          <button onClick={()=>document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })} 
+          className="bg-[#2F5D50] cursor-pointer text-white px-6 py-2 rounded-full">
             Contact Us
           </button>
         </div>
@@ -33,7 +34,7 @@ const Contact = () => {
        {/* End Banner Section */}
 
       {/* Contact Info Section */}
-      <section className='flex justify-center items-center py-20'>
+      <section id='contact' className='flex justify-center items-center py-20'>
       <div className="bg-[#D9FFF4] w-[90%] rounded-3xl  py-10 md:px-20 flex flex-col md:flex-row items-center gap-5 justify-between ">
         {/* Left Side: Contact Info */}
         <div className="flex flex-col text-start space-y-5 ">
@@ -46,7 +47,7 @@ const Contact = () => {
             </div>
             <div className="flex items-center space-x-3">
               <img src={assets.Contact_Icon} className="w-5 h-5 " />
-              <span>+91 0000000000</span>
+              <span>+91 9656737558</span>
             </div>
             <div className="flex items-center space-x-3">
               <img src={assets.Location_Icon}className="w-5 h-5 " />
@@ -58,11 +59,11 @@ const Contact = () => {
           <div>
             <h4 className="font-bold text-xl mb-2 text-[#2F5D50]">Follow Us</h4>
             <div className="flex flex-col space-y-4">
-              <a href="#" className="flex items-center space-x-2 text-[#2F5D50]">
+              <a href="https://www.instagram.com/sajina_construction_?igsh=MTRhNmNtZ2x6Nms0bw==" className="flex items-center space-x-2 text-[#2F5D50]">
                 <img src={assets.C_Insta} className="w-5 h-5" />
                 <span>Instagram</span>
               </a>
-              <a href="#" className="flex items-center space-x-2 text-[#2F5D50]">
+              <a href="https://www.facebook.com/share/p/1Bb2kigewn/" className="flex items-center space-x-2 text-[#2F5D50]">
                 <img src={assets.C_Facebook} className="w-5 h-5" />
                 <span>Facebook</span>
               </a>
@@ -73,7 +74,7 @@ const Contact = () => {
         {/* Right Side: Map */}
        <div
   onClick={() => mapLocation()}
-  className="relative shadow-2xl rounded-3xl cursor-pointer h-[250px] w-[350px] md:w-[500px] md:h-[350px]"
+  className="relative shadow-2xl rounded-3xl cursor-pointer h-[250px] w-[300px] md:w-[500px] md:h-[350px]"
   style={{
     backgroundImage: `url(${assets.Map})`,
     backgroundSize: "cover",

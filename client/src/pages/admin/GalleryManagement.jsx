@@ -174,8 +174,6 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
         </div>
         </>
       }
-      
-
       {/* Main Content */}
       <main className="flex-1 p-2 md:p-8">
         <div className="flex justify-between items-center mb-6">

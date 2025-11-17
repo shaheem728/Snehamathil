@@ -50,10 +50,13 @@ import Site from './Site.jpg';
 import Design from './Design.jpg';
 import Installation from './Installation.jpg';
 import Support from './Support.jpg';
+import Sajina from './Sajina.jpg';
 import Edit from './Edit.png'
 import leftArrow from './leftArrow.png'
 import rightArrow from './rightArrow.png'
+import Ad from  './Ad.MOV'
 export const assets = {
+  Ad,
   rightArrow,
   leftArrow,
   Edit,
@@ -125,7 +128,7 @@ export const contacts = [
     {
       icon: Contact_Icon,
       title: "Call Now",
-      lines: ["91+ 0000000000", "91+ 0000000000"],
+      lines: ["91+ 9656737558"],
     },
     {
       icon: Location_Icon,
@@ -142,7 +145,7 @@ export const contacts = [
   export const slides = [
     {
       id: 1,
-      url: Slide_1,
+      url:  Slide_1,
     }, 
     {
       id: 2,
@@ -252,7 +255,7 @@ export const OusrServices = [
 export const carousal = [
   {
    title: "Stronger Walls. Stronger Bonds. Stronger Futures.",
-   img:Home,
+   img:Sajina,
   },
   {
     title: "Solid Work. Trusted Service. Lasting Strength.",

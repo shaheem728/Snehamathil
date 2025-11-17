@@ -10,13 +10,13 @@
 
 
 .mission_image{
-  @apply object-cover w-auto h-36  md:h-52 shadow-2xl
+  @apply object-cover w-auto h-36 md:w-72 md:h-64 shadow-2xl
 }
 
 /* Move bullets like image */
 .testimonials-swiper .swiper-pagination {
   bottom: 15em !important;
-  left: 0 !important;
+  left: 1em !important;
   width: auto !important;
   padding-left: 20px;
 }
@@ -37,11 +37,27 @@
   background: #2F5D50 !important;     /* black */
 }
 
+@media (max-width: 768px) {
+  .about-img-overlay {
+    top: 2rem !important;
+    right: 1rem !important;
+  }
+}
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .testimonials-swiper .swiper-pagination {
     visibility: hidden;
   }
+
+  /* Bullet default */
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+  .home-swiper .swiper-pagination {
+  bottom: 2em !important;
+}
 
 }
 

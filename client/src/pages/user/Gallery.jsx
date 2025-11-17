@@ -5,26 +5,18 @@ import  GalleryContext  from "../../context/GalleryContext";
 const Gallery = () => {
   const {galleryData,getGalleryItems} = useContext(GalleryContext)
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getGalleryItems();
-    if(galleryData.length != 0){
-      setLoading(false)
-    }
   }, []);
 
- 
+  useEffect(() => {
+    setLoading(false); // whenever galleryData updates
+  }, [galleryData]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <p className="text-gray-600 text-xl">Loading...</p>
-      </div>
-    );
-  }
-  const publishedItems = galleryData.filter(item => item.is_draft === false);
+ const publishedItems = galleryData.filter(item => item.is_draft === false);
+ 
   return (
     <section className="bg-[#F0FFFB] py-40 text-center">
       <div className="container mx-auto px-6">
@@ -48,9 +40,10 @@ const Gallery = () => {
           <h3 className="text-left text-2xl font-semibold text-gray-800 mb-8">
             Explore Our Works
           </h3>
-  
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
-            {/* {galleryData.map((item, index) => ( */}
+          {
+            loading ? <div className="min-h-screen flex justify-center items-center">
+            <p className="text-gray-600 text-xl">Loading...</p>
+            </div> : <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {publishedItems.map((item, index) => (
               <div
                 key={index}
@@ -61,12 +54,14 @@ const Gallery = () => {
                   alt={item.title}
                   className="w-full h-40 object-cover"
                 />
-                <p className="absolute left-2 bottom-3 text-lg font-medium text-white">
+                <p className="absolute left-2 bottom-3 text-md font-medium text-white">
                   {item.title}
                 </p>
               </div>
             ))}
           </div>
+          }
+            
         
           {/* Contact Button */}
           <div className="mt-12">
