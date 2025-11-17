@@ -8,6 +8,8 @@ import "swiper/css/pagination";
 import BuildWithUs from '../../components/BuildWithUs';
 import GalleryContext from '../../context/GalleryContext'
 import { X } from 'lucide-react';
+const Ad = "/videos/ad.mov";
+
 
 const Home = () => {
   const {showAd, setShowAd} = useContext(GalleryContext)
@@ -37,8 +39,8 @@ const Home = () => {
       className="rounded-lg shadow-xl w-96 h-[30vh] md:h-[40vh] lg:h-[50vh] "
       onEnded={() => setShowAd(false)}
     >
-      <source src={assets.Ad} type="video/mp4" />
-      <source src={assets.Ad} type="video/ogg" />
+      <source src={Ad} type="video/mp4" />
+      <source src={Ad} type="video/ogg" />
     </video>
   </div>
 )}

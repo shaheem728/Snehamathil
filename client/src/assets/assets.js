@@ -54,9 +54,8 @@ import Sajina from './Sajina.jpg';
 import Edit from './Edit.png'
 import leftArrow from './leftArrow.png'
 import rightArrow from './rightArrow.png'
-import Ad from  './Ad.MOV'
+
 export const assets = {
-  Ad,
   rightArrow,
   leftArrow,
   Edit,
