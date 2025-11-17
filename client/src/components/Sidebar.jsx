@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const navigate = useNavigate()
   return (
-     <aside className="w-48 md:w-64 min-h-screen bg-[#204E43] text-white flex flex-col justify-between py-6">
+    <aside className="w-64 h-full bg-[#204E43] flex flex-col justify-between py-6">
         <div>
           <div className="px-6 mb-8">
             <h1 className="text-xl font-semibold"> Sajina Construction</h1>

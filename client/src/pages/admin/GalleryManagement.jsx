@@ -159,21 +159,31 @@ const draftItems = galleryData.filter(item => item.is_draft === true);
 const publishedItems = galleryData.filter(item => item.is_draft === false);
 
   return (
-    <div className="relative flex min-h-screen bg-gray-50">
+    <div className="relative w-full flex min-h-screen bg-gray-50">
       <input type='file' accept='image/*' hidden id='inputImg' onChange={handleImage}  />  
-      {/* Sidebar */}
-      {
-        <>
-        <div className="hidden md:flex">
-           <Sidebar/>
-        </div>
-        <div className=" md:hidden absolute   left-0 top-0 ">
-         {
-            isMenuOpen ?  <Sidebar/> : ''
-         }   
-        </div>
-        </>
-      }
+       {/* SIDEBAR */}
+       {/* SIDEBAR (Desktop) */}
+<div className="hidden md:flex">
+  <Sidebar />
+</div>
+
+{/* Mobile Sidebar */}
+  <div
+    className={`fixed inset-0 z-40 transition-transform duration-300 md:hidden ${
+      isMenuOpen ? "translate-x-0" : "-translate-x-full"
+    }`}
+  >
+    {/* Click outside to close */}
+    <div
+      className="absolute inset-0  bg-opacity-50"
+      onClick={() => setIsMenuOpen(false)}
+    ></div>
+
+    {/* Sidebar Panel */}
+    <div className="absolute left-0 top-0 bottom-0 w-64  shadow-lg overflow-y-auto">
+      <Sidebar />
+    </div>
+  </div>
       {/* Main Content */}
       <main className="flex-1 p-2 md:p-8">
         <div className="flex justify-between items-center mb-6">
@@ -197,7 +207,7 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
 
              {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-[#204E43] cursor-pointer  "
+         className="md:hidden text-[#204E43] cursor-pointer z-50 relative"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
            <Menu className="w-10" />
@@ -222,7 +232,7 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
               {draftItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[#E8FFF7]  shadow-md rounded-lg overflow-hidden"
+                  className="bg-[#E8FFF7] relative  shadow-md rounded-lg overflow-hidden"
                 >
                   <img
                     src={item.image}
@@ -230,6 +240,7 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
                     className="w-full h-40 object-cover"
                   />
                   <div className="p-4">
+                    <div className="py-2">
                     <h3 className="font-semibold text-gray-800 text-sm mb-1">
                       {item.title}
                     </h3>
@@ -239,7 +250,8 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
                     <p className="text-xs text-gray-400 mb-3">
                       order:{item.order}
                     </p>
-                    <div className="flex space-x-4">
+                    </div>
+                    <div className="flex absolute bottom-2 space-x-4">
                       <button onClick={()=>{
                         fetchEditing(item.id);
                         setEditingID(item.id)
@@ -276,11 +288,11 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
             </div> </>  :
              <>
             {/* Gallery Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid  grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {publishedItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[#E8FFF7]  shadow-md rounded-lg overflow-hidden"
+                  className="bg-[#E8FFF7] relative w-96 md:w-full mx-auto shadow-md rounded-lg overflow-hidden"
                 >
                   <img
                     src={item.image}
@@ -288,6 +300,7 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
                     className="w-full h-40 object-cover"
                   />
                   <div className="p-4">
+                    <div className="py-2">
                     <h3 className="font-semibold text-gray-800 text-sm mb-1">
                       {item.title}
                     </h3>
@@ -297,7 +310,8 @@ const publishedItems = galleryData.filter(item => item.is_draft === false);
                     <p className="text-xs text-gray-400 mb-3">
                       order:{item.order}
                     </p>
-                    <div className="flex space-x-4">
+                    </div>
+                    <div className="flex absolute bottom-2 space-x-4">
                       <button onClick={()=>{
                         fetchEditing(item.id);
                         setEditingID(item.id);

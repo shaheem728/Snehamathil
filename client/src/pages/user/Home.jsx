@@ -10,7 +10,6 @@ import GalleryContext from '../../context/GalleryContext'
 import { X } from 'lucide-react';
 const Ad = "/videos/ad.mov";
 
-
 const Home = () => {
   const {showAd, setShowAd} = useContext(GalleryContext)
   const navigate =  useNavigate ()
@@ -110,7 +109,7 @@ const Home = () => {
     </section>
      {/* end services section */}
      {/* Start Wall Section */}
-<section className="bg-[#375E56] text-white  min-h-[88vh] flex items-center px-6 py-10">
+<section className="bg-[#375E56] text-white  min-h-screen flex items-center px-6 py-10">
   <div className="flex flex-col md:flex-row items-center justify-center w-full gap-10">
 
     {/* Left Text Section */}
@@ -137,28 +136,14 @@ const Home = () => {
     </div>
 
     {/* Right Image Collage */}
-    <div className="md:relative h-full md:h-auto md:w-1/2 w-full flex flex-col justify-center items-center">
-      {/* Base Image */}
-      <img
-        src={assets.Work_B}
-        alt="Wall Design Center"
-        className="md:absolute md:right-20  z-20 w-72 h-52 md:w-96 md:h-72 object-cover border-8 border-[#2F5D50] shadow-xl rounded-lg"
-      />
-
-      {/* Top Image */}
-      <img
-        src={assets.Add_Wall_Z1}
-        alt="Wall Design Top"
-        className="md:absolute top-0 md:-top-[18em] md:right-0 w-72 h-52 md:w-80 md:h-64 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
-      />
-
-      {/* Bottom Image */}
-      <img
-        src={assets.Add_Wall_Z3}
-        alt="Wall Design Bottom"
-        className="md:absolute bottom-0 md:-bottom-[18em] md:right-0 w-72 h-52 md:w-80 md:h-64 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg"
-      />
-    </div>
+     {/* Right Image Collage */} <div className="lg:relative h-full md:h-atuto  md:w-1/2 w-full flex flex-col justify-center items-center"> 
+     {/* Base Image */} 
+     <img src={assets.Work_B} alt="Wall Design Center" className="lg:absolute lg:right-20 z-20 w-72 h-52 md:w-96 md:h-72 object-cover border-8 border-[#2F5D50] shadow-xl rounded-lg" /> 
+     {/* Top Image */}
+      <img src={assets.Add_Wall_Z1} alt="Wall Design Top" className="lg:absolute top-0 md:-top-[17em] md:right-0 w-72 h-52 md:w-80 md:h-64 object-cover border-8 border-[#2F5D50] shadow-md rounded-lg" /> 
+     {/* Bottom Image */} 
+     <img src={assets.Add_Wall_Z3} alt="Wall Design Bottom" className="lg:absolute bottom-0 md:-bottom-[17em] md:right-0 w-72 h-52 md:w-80 md:h-64  object-cover border-8 border-[#2F5D50] shadow-md rounded-lg" />
+      </div>
   </div>
 </section>
 {/* End Wall Section */}
@@ -206,13 +191,13 @@ const Home = () => {
     </section>
   {/* End Work Section */}
   {/* Start Testimonials Section */}
-      <section className="min-h-[60vh]  px-6 text-center bg-[#F0FFFB]">
+      <section className=" min-h-screen   px-6 text-center bg-[#F0FFFB]">
       <h2 className="text-3xl font-bold text-gray-800 mb-5 uppercase">
         What Is Says Our Clients 
       </h2>
       <p className='text-lg font-semibold mb-2'>Hear from our happy customers who trusted us with their  dream projects. Their <br/> words inspire us to keep building with passion and precision.</p>
 
-      <div className="container mx-auto px-5 md:px-20  flex justify-center md:relative h-[80vh]">
+      <div className=" mx-auto px-5 md:px-20   flex justify-center md:relative min-h-[70vh] ">
         <Swiper
           className="testimonials-swiper"
           modules={[Autoplay, Pagination]}
@@ -228,8 +213,8 @@ const Home = () => {
                     key={i}
                     className={`bg-white p-5 shadow-lg border rounded-lg md:w-[45%] mx-auto ${
                       i === 0
-                        ? "md:absolute md:top-20 md:left-30"
-                        : "md:absolute md:bottom-40 md:right-30"
+                        ? "md:absolute md:top-10 md:-translate-y-1 md:left-30"
+                        : "md:absolute md:top-1/2 md:-translate-y-1/6 md:-translate-x-1/2 md:right-1 "
                     }`}
                   >
                     <div className="flex md:flex-row flex-col space-y-3">
@@ -259,35 +244,46 @@ const Home = () => {
     </section>
   {/* End Testimonials Section */}
   {/* Start ContactUs Section */}
-      <section  className="h-full md:h-[90vh] py-10 px-20 bg-[#F0FFFB]  ">
-      <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-10 md:ps-36">Contact us</h2>
+    <section className="h-full lg:h-[90vh] py-16 px-6 md:px-20 bg-[#F0FFFB]">
+  <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-10 md:ps-36">
+    Contact us
+  </h2>
 
-      <div className="flex flex-col justify-center items-center space-y-5 max-w-6xl mx-auto px-6 md:relative">
-        {contacts.map((c, index) => (
-          <div
-            key={index}
-            className={`bg-[#F0FFFB] text-center border border-gray-400 rounded-lg transition-all w-[60vw] h-64 md:w-80 md:h-[48vh] flex flex-col items-center py-10 space-y-4
-              ${
-                      index === 0 ? "md:absolute  md:top-8  md:left-20 " :index ===2?"md:absolute md:top-8 md:-right-10":
-                        "md:absolute  left-[30em] -bottom-[30em] "
-                    }
-              `}
-          >
-            <img
-              src={c.icon}
-              alt={c.title}
-              className=" w-9 h-9 md:w-12 md:h-12 object-contain mb-5"
-            />
-            <h3 className="text-xl font-semibold ">{c.title}</h3>
-            <div className="text-xl font-semibold leading-relaxed pt-5 md:pt-16">
-              {c.lines.map((line, i) => (
-                <p key={i}>{line}</p>
-              ))}
-            </div>
-          </div>
-        ))}
+  <div
+    className="max-w-6xl mx-auto  grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3  gap-10  place-items-center ">
+    {contacts.map((c, index) => (
+      <div
+        key={index}
+        className={`
+          ${c.id == 2 ? 'md:mt-28':''}
+            bg-[#F0FFFB] 
+          text-center 
+          border border-gray-400 
+          rounded-lg 
+          transition-all 
+          w-[60vw] h-64 
+          md:w-80 md:h-80 
+          lg:w-72 
+          flex flex-col items-center 
+          py-10 space-y-4
+          `}
+      >
+        <img
+          src={c.icon}
+          alt={c.title}
+          className="w-9 h-9 md:w-12 md:h-12 object-contain mb-5"
+        />
+        <h3 className="text-xl font-semibold">{c.title}</h3>
+        <div className="text-xl font-semibold leading-relaxed pt-5 md:pt-16">
+          {c.lines.map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
       </div>
-    </section>
+    ))}
+  </div>
+</section>
+
   {/* End ContactUs Section */}
   
     </section>

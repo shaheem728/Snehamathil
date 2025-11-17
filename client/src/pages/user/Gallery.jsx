@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import PanoramaSlider from '../../components/PanoramaSlider'
 import { useNavigate } from 'react-router-dom'
 import  GalleryContext  from "../../context/GalleryContext";
+import { gallery } from '../../assets/assets';
 const Gallery = () => {
   const {galleryData,getGalleryItems} = useContext(GalleryContext)
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const Gallery = () => {
             loading ? <div className="min-h-screen flex justify-center items-center">
             <p className="text-gray-600 text-xl">Loading...</p>
             </div> : <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
-            {publishedItems.map((item, index) => (
+            {gallery.map((item, index) => (
               <div
                 key={index}
                 className="relative mt-5 shadow-xl overflow-hidden hover:shadow-xl transition-shadow"
@@ -52,7 +53,7 @@ const Gallery = () => {
                 <img
                   src={item.image}      // backend image URL
                   alt={item.title}
-                  className="w-full h-40 object-cover"
+                  className="w-full h-52 object-cover"
                 />
                 <p className="absolute left-2 bottom-3 text-md font-medium text-white">
                   {item.title}

@@ -17,10 +17,10 @@ const Contact = () => {
       >
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 max-w-3xl px-4">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+          <h2 className="text-2xl md:text-4xl font-semibold mb-4">
             We’re Here to Help You Build Stronger Boundaries
           </h2>
-          <p className="text-sm md:text-base mb-6  md:px-20">
+          <p className="text-lg md:text-xl mb-6  md:px-20">
             Whether you’re looking for a new Slab Wall construction, custom wall
             design, or just a site visit & quotation, our team is ready to
             assist you with expert support and transparent pricing.
@@ -72,14 +72,14 @@ const Contact = () => {
         </div>
 
         {/* Right Side: Map */}
-       <div
+         <div
   onClick={() => mapLocation()}
   className="relative shadow-2xl rounded-3xl cursor-pointer h-[250px] w-[300px] md:w-[500px] md:h-[350px]"
   style={{
     backgroundImage: `url(${assets.Map})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "center", 
+    backgroundPosition: "center",
   }}
 >
 
@@ -87,13 +87,30 @@ const Contact = () => {
   <img
     src={assets.Location_Icon}
     alt="Location Icon"
-    className="w-8 h-8 absolute left-1/2 top-5/12  -translate-x-1/2 -translate-y-1/2"
+    className="w-8 h-8 absolute left-1/2 top-[40%] -translate-x-1/2 -translate-y-1/2"
   />
 
   {/* Location text */}
-  <h3 className="absolute text-sm   top-6/12  translate-x-5/12 md:text-xl  text-[#2F5D50] font-bold ">
-    Kakkanad, Kochi Kerala India
-  </h3>
+   <h3
+  className="
+    absolute 
+    left-1/2 
+    top-[55%] 
+    -translate-x-1/2 
+    -translate-y-1/2 
+    text-sm 
+    md:text-xl  
+    text-[#2F5D50] 
+    font-bold
+    text-center
+    w-full
+    leading-tight
+  "
+>
+  Kakkanad, Kochi Kerala India
+</h3>
+
+
 </div>
 
     </div>
