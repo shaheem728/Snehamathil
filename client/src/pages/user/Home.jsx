@@ -244,7 +244,7 @@ const Home = () => {
     </section>
   {/* End Testimonials Section */}
   {/* Start ContactUs Section */}
-    <section className="h-full lg:h-[90vh] py-16 px-6 md:px-20 bg-[#F0FFFB]">
+    <section className="h-full lg:h-screen py-16 px-6 md:px-20 bg-[#F0FFFB]">
   <h2 className="text-3xl md:text-5xl font-bold text-gray-800 mb-10 md:ps-36">
     Contact us
   </h2>
