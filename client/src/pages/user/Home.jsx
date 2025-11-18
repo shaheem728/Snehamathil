@@ -253,8 +253,9 @@ const Home = () => {
     className="max-w-6xl mx-auto  grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3  gap-10  place-items-center ">
     {contacts.map((c, index) => (
         <div
+        key={index}
         className={`bg-[#F0FFFB] text-center border border-gray-400 rounded-lg transition-all w-[60vw] h-64 md:w-80 md:h-80 lg:w-72 flex flex-col items-center py-10 space-y-4 ${
-          c.id === 2 ? "md:mt-28" : "md:mt-0"
+          index === 1 ? "md:mt-28" : "md:mt-0"
         }`}
       >
         <img
