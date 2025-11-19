@@ -2,12 +2,6 @@ import { Link } from "react-router-dom";
 import {assets} from "../../assets/assets";
 import { Youtube } from 'lucide-react';
 const Footer = () => {
-  const mapLocation =()=>{
-    window.open(
-      "https://www.google.com/maps?q=Kakkanad,+Kochi,+Kerala,+India",
-      "_blank"
-    )
-    }
   return (
     <footer className="bg-[#2F5D50] text-white px-10 py-10 md:px-20">
       <div className="flex flex-col md:flex-row justify-evenly  gap-10 ">

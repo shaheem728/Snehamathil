@@ -4,7 +4,7 @@ import { assets } from '../../assets/assets'
 const Contact = () => {
     const mapLocation =()=>{
     window.open(
-      "https://www.google.com/maps?q=Kakkanad,+Kochi,+Kerala,+India",
+      "https://maps.app.goo.gl/FSFedtx7V5Tj3Wgo7?g_st=awb",
       "_blank"
     )
     }

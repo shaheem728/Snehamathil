@@ -45,7 +45,7 @@ const Gallery = () => {
             loading ? <div className="min-h-screen flex justify-center items-center">
             <p className="text-gray-600 text-xl">Loading...</p>
             </div> : <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
-            {gallery.map((item, index) => (
+            {publishedItems.map((item, index) => (
               <div
                 key={index}
                 className="relative mt-5 shadow-xl overflow-hidden hover:shadow-xl transition-shadow"

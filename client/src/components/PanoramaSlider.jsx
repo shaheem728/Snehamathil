@@ -24,19 +24,19 @@ const PanoramaSlider = () => {
             breakpoints={{
               640: {
                 slidesPerView: 1.5,
-                spaceBetween: -70,
+                spaceBetween: 0,
               },
               768: {
-                slidesPerView: 2.5,
-                spaceBetween: -70,
+                slidesPerView: 1.5,
+                spaceBetween: -1,
               },
               1024: {
                 slidesPerView: 3.5,
-                spaceBetween: -70,
+                spaceBetween: 1,
               },
               1280: {
                 slidesPerView: 4.5,
-                spaceBetween: -50,
+                spaceBetween: -40,
               },
             }}
             className="panorama-swiper"
@@ -70,17 +70,17 @@ const PanoramaSlider = () => {
         
         .panorama-swiper .swiper-slide {
           transition: transform 0.3s ease, opacity 0.3s ease;
-          transform: scale(0.90);
+          transform: scale(0.89);
         }
         
         .panorama-swiper .swiper-slide-active {
-          transform: scale(0.70);
+          transform: scale(0.84);
           z-index: 10;
         }
         
         .panorama-swiper .swiper-slide-prev,
         .panorama-swiper .swiper-slide-next {
-          transform: scale(0.80);
+          transform: scale(0.86);
         }
      
         
