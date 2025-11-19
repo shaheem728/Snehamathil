@@ -45,7 +45,7 @@ const Home = () => {
 )}
 
     {/* start Home Banner */}
-      <div className=" mx-auto md:pt-16 flex justify-center relative h-[60vh] md:h-screen lg:h-screen">
+      <div className=" mx-auto pt-14 md:pt-16 flex justify-center relative h-[40vh] md:h-screen lg:h-screen">
                {/*Swiper Slide */}
                <Swiper modules={[Navigation,Autoplay,Pagination]}
                className='home-swiper' 
@@ -58,20 +58,19 @@ const Home = () => {
                    {carousal.map((slide, index) => 
                      (<SwiperSlide key={index}> 
                      <div
-                        className="h-screen bg-no-repeat  bg-center flex flex-col justify-between items-center"
-                        style={{ backgroundImage: `url(${slide.img})`,
-                          backgroundSize:"100% 100%"
+                        className="h-full bg-no-repeat bg-size-[100%_100%] lg:bg-cover lg:bg-center flex flex-col justify-between items-center"
+                        style={{ backgroundImage: `url(${slide.img})`
                          }}
                       >
                         {/* Dark overlay (optional for contrast) */}
                       <div className="absolute inset-0 bg-black/10 "></div>  
                       <div className='absolute top-1/3  flex flex-col items-center justify-center'>  
                       <h1 className=" text-lg md:text-5xl font-semibold md:mt-4  w-[80%] text-white text-center uppercase">{slide.title}</h1>
-                      <div className='flex gap-3 mt-5 '>
-                      <button onClick={()=>navigate('/contact')} className="cursor-pointer  mt-10 md:mt-6 px-2 py-2 md:px-8 md:py-3 text-sm bg-[#2F5D50]   text-white font-semibold">
+                      <div className='flex gap-3 mt-2 md:mt-5 '>
+                      <button onClick={()=>navigate('/contact')} className="cursor-pointer h-7 md:h-10  md:mt-6 px-2 py-1 md:px-8 md:py-3 text-[10px] md:text-sm bg-[#2F5D50]   text-white font-semibold">
                       CONTACT US
                       </button>
-                      <button onClick={()=>navigate('/gallery')} className="cursor-pointer mt-10 md:mt-6 px-2 py-2 md:px-8 md:py-3 text-sm bg-white text-[#2F5D50] font-semibold">
+                      <button onClick={()=>navigate('/gallery')} className="cursor-pointer h-7 md:h-10  md:mt-6 px-2 py-1 md:px-8 md:py-3 text-[10px] md:text-sm bg-white text-[#2F5D50] font-semibold">
                         VIEW GALLERY
                       </button>
                       </div>
