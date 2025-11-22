@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',cast=bool)
 
-ALLOWED_HOSTS = ['snehamathilserver.onrender.com','snehamathil.vercel.app']
+ALLOWED_HOSTS = ['snehamathilserver.onrender.com','.vercel.app']
 
 
 # Application definition
