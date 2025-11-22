@@ -182,6 +182,10 @@ export const contacts = [
       id: 10,
       url: Work_C,
     }, 
+     {
+      id: 11,
+      url: Slide_5,
+    }, 
   ]
 
   export const gallery = [

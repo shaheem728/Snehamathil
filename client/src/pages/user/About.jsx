@@ -10,9 +10,9 @@ const About = () => {
     <section className="py-20  px-6  md:px-20">
       <h2 className="text-2xl md:text-5xl font-bold text-center mt-5 mb-12">About us</h2>
 
-      <div className="grid md:grid-cols-2 items-center gap-10   ">
+      <div className="grid md:grid-cols-2 gap-10 items-center    ">
         {/* Left - Images */}
-        <div className="flex flex-col gap-6 relative py-20 h-[30vh] ">
+        <div className="flex flex-col gap-6 relative py-20 h-[40vh] ">
           <img
             src={assets.Slide_1}
             alt="Boundary wall"
@@ -26,7 +26,7 @@ const About = () => {
         </div>
 
          {/* Right - Text Content */}
-    <div>
+    <div className=''>
       <h3 className="text-xl md:text-2xl font-semibold leading-snug mb-4">
         Building Strong Walls, <br /> Creating Stronger Trust
       </h3>

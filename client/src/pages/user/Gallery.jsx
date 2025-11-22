@@ -6,18 +6,11 @@ import { gallery } from '../../assets/assets';
 const Gallery = () => {
   const {galleryData,getGalleryItems} = useContext(GalleryContext)
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     getGalleryItems();
   }, []);
 
-  useEffect(() => {
-    setLoading(false); // whenever galleryData updates
-  }, [galleryData]);
-
  const publishedItems = galleryData.filter(item => item.is_draft === false);
- 
   return (
     <section className="bg-[#F0FFFB] py-40 text-center">
       <div className="container mx-auto px-6">
@@ -42,7 +35,7 @@ const Gallery = () => {
             Explore Our Works
           </h3>
           {
-            loading ? <div className="min-h-screen flex justify-center items-center">
+            publishedItems.length == 0 ? <div className="min-h-screen flex justify-center items-center">
             <p className="text-gray-600 text-xl">Loading...</p>
             </div> : <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-5">
             {publishedItems.map((item, index) => (

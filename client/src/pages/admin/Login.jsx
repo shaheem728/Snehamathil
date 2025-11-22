@@ -58,17 +58,17 @@ const Login = () => {
  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="flex h-[350px] md:h-auto w-auto md:w-[900px] shadow-xl rounded-xl overflow-hidden bg-white">
+      <div className="flex flex-col md:flex-row h-full md:h-[70vh] w-full mx-2 md:w-[900px] shadow-xl rounded-xl overflow-hidden bg-white">
         {/* Left Section */}
         <div
-          className="w-1/2 bg-[#204E43] text-white flex flex-col justify-center items-center "
+          className="w-full md:w-1/2 h-60 md:h-full bg-[#204E43] text-white flex flex-col justify-center items-center "
           style={{
             backgroundImage: `url(${assets.LoginBG})`, // e.g. adminBg: require('./admin-bg.jpg')
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          <div className="bg-[#204E43]/90 w-full h-full flex flex-col justify-center items-center rounded-l-lg">
+          <div className="bg-[#204E43]/90 w-full h-full flex flex-col justify-center items-center rounded-t-lg md:rounded-t-none rounded-l-none md:rounded-l-lg">
             <div className="flex flex-col items-center">
                <Shield className=" w-12 h-12 text-white mb-4" />
               <h1 className="text-2xl font-semibold mb-2">Sajina Construction</h1>
@@ -79,7 +79,7 @@ const Login = () => {
         </div>
 
         {/* Right Section */}
-        <div className="w-1/2 flex flex-col justify-center px-5 md:px-10  py-12">
+        <div className="md:w-1/2 flex flex-col justify-center px-5 md:px-10  py-12">
           <div className="flex flex-col items-start md:mb-8">
             <Shield className=" w-8 h-8 text-[#2C5F4F] opacity-90" />
             <h2 className="md:text-2xl font-semibold text-gray-800">
